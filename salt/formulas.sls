@@ -8,7 +8,7 @@
 {% for entry in entries %}
 
 {% set basedir = formulas_git_opt(env, 'basedir')|load_yaml %}
-{% set gitdir = '{0}/{1}'.format(basedir, entry) %}
+{% set gitdir = '{0}/{1}'.format(basedir, salt['util.basename'](entry)) %}
 {% set update = formulas_git_opt(env, 'update')|load_yaml %}
 
 # Setup the directory hosting the Git repository
@@ -29,7 +29,7 @@
 {% set baseurl = formulas_git_opt(env, 'baseurl')|load_yaml %}
 {{ gitdir }}:
   git.latest:
-    - name: {{ baseurl }}/{{ entry }}.git
+    - name: {{ baseurl }}{{ entry }}.git
     - target: {{ gitdir }}
     {%- for key, value in options.items() %}
     - {{ key }}: {{ value }}

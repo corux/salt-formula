@@ -18,7 +18,7 @@
 {%- set value = [] -%}
 {%- for dir in formulas.get(env, []) -%}
 {%- set basedir = formulas_git_opt(env, 'basedir')|load_yaml -%}
-{%- do value.append('{0}/{1}'.format(basedir, dir)) -%}
+{%- do value.append('{0}/{1}'.format(basedir, salt['util.basename'](dir))) -%}
 {%- endfor -%}
 {{ value|yaml }}
 {%- endmacro -%}
